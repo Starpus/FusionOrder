@@ -1,0 +1,23 @@
+.products-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.products-header h1 {
+  margin: 0;
+}
+
+.products-filters {
+  display: flex;
+  gap: 16px;
+}
+

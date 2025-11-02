@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: fusion-order-server
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/fusion?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: fusion
+    password: 741852
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+jwt:
+  secret: fusionOrderSecretKey2024SecureKeyForJWTTokenGenerationMinimum256BitsRequired
+  expiration: 86400000 # 24小时
+
+file:
+  upload-dir: uploads
+
