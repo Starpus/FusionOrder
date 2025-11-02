@@ -33,7 +33,8 @@ const Products = () => {
       const uniqueCategories = [...new Set(data.map(p => p.category))]
       setCategories(uniqueCategories)
     } catch (error) {
-      message.error('加载产品失败')
+      console.error('加载产品失败:', error)
+      message.error(error.message || '加载产品失败')
     } finally {
       setLoading(false)
     }
@@ -49,7 +50,8 @@ const Products = () => {
       const data = await api.get('/products', { params: { keyword: value } })
       setProducts(data)
     } catch (error) {
-      message.error('搜索失败')
+      console.error('搜索失败:', error)
+      message.error(error.message || '搜索失败')
     } finally {
       setLoading(false)
     }

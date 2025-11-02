@@ -10,11 +10,14 @@ const Register = () => {
 
   const handleSubmit = async (values) => {
     try {
+      // api拦截器会自动提取ApiResponse的data字段
       await api.post('/auth/register', values)
       message.success('注册成功，请登录')
       navigate('/login')
     } catch (error) {
-      message.error(error.response?.data?.message || '注册失败，请稍后重试')
+      console.error('注册错误:', error)
+      const errorMessage = error.message || error.response?.data?.message || '注册失败，请稍后重试'
+      message.error(errorMessage)
     }
   }
 

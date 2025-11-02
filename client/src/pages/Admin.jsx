@@ -38,7 +38,16 @@ const Admin = () => {
       const data = await api.get('/admin/users')
       setUsers(data)
     } catch (error) {
-      message.error('加载用户列表失败')
+      console.error('加载用户列表失败:', error)
+      const errorMessage = error.message || error.response?.data?.message || '加载用户列表失败'
+      if (error.response?.status === 403) {
+        message.error('权限不足，需要管理员权限')
+      } else if (error.response?.status === 401) {
+        message.error('请先登录')
+        navigate('/login')
+      } else {
+        message.error(errorMessage)
+      }
     }
   }
 
@@ -48,7 +57,8 @@ const Admin = () => {
       const data = await api.get('/products')
       setProducts(data)
     } catch (error) {
-      message.error('加载产品列表失败')
+      console.error('加载产品列表失败:', error)
+      message.error(error.message || '加载产品列表失败')
     } finally {
       setLoading(false)
     }
@@ -59,7 +69,8 @@ const Admin = () => {
       const data = await api.get('/orders')
       setOrders(data)
     } catch (error) {
-      message.error('加载订单列表失败')
+      console.error('加载订单列表失败:', error)
+      message.error(error.message || '加载订单列表失败')
     }
   }
 
@@ -77,7 +88,9 @@ const Admin = () => {
       setEditingUser(null)
       fetchUsers()
     } catch (error) {
-      message.error(error.response?.data?.message || '操作失败')
+      console.error('用户操作失败:', error)
+      const errorMessage = error.message || error.response?.data?.message || '操作失败'
+      message.error(errorMessage)
     }
   }
 
@@ -95,7 +108,9 @@ const Admin = () => {
       setEditingProduct(null)
       fetchProducts()
     } catch (error) {
-      message.error('操作失败')
+      console.error('产品操作失败:', error)
+      const errorMessage = error.message || error.response?.data?.message || '操作失败'
+      message.error(errorMessage)
     }
   }
 
@@ -109,7 +124,9 @@ const Admin = () => {
           message.success('删除成功')
           fetchUsers()
         } catch (error) {
-          message.error('删除失败')
+          console.error('删除用户失败:', error)
+          const errorMessage = error.message || '删除失败'
+          message.error(errorMessage)
         }
       }
     })
@@ -125,7 +142,9 @@ const Admin = () => {
           message.success('删除成功')
           fetchProducts()
         } catch (error) {
-          message.error('删除失败')
+          console.error('删除产品失败:', error)
+          const errorMessage = error.message || '删除失败'
+          message.error(errorMessage)
         }
       }
     })
@@ -149,7 +168,9 @@ const Admin = () => {
       message.success('订单状态更新成功')
       fetchOrders()
     } catch (error) {
-      message.error('更新失败')
+      console.error('更新订单状态失败:', error)
+      const errorMessage = error.message || '更新失败'
+      message.error(errorMessage)
     }
   }
 

@@ -24,8 +24,12 @@ const ProductDetail = () => {
       const data = await api.get(`/products/${id}`)
       setProduct(data)
     } catch (error) {
-      message.error('加载产品详情失败')
-      navigate('/products')
+      console.error('加载产品详情失败:', error)
+      const errorMessage = error.message || '加载产品详情失败'
+      message.error(errorMessage)
+      if (error.response?.status === 404) {
+        navigate('/products')
+      }
     } finally {
       setLoading(false)
     }
@@ -44,7 +48,9 @@ const ProductDetail = () => {
       message.success('订单提交成功！我们会尽快联系您')
       form.resetFields()
     } catch (error) {
-      message.error('订单提交失败，请稍后重试')
+      console.error('订单提交失败:', error)
+      const errorMessage = error.message || '订单提交失败，请稍后重试'
+      message.error(errorMessage)
     }
   }
 
